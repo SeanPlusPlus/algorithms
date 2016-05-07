@@ -18,7 +18,7 @@ def bfs(s, graph):
     return parent 
 
 # i came up with this on my own
-def shortestPath(current, end, parent, path=[]):
+def shortestPath(current, end, parent, path):
     if current == end:
         return path + [current]
     path.append(current)
@@ -39,7 +39,7 @@ def main():
     parent1 = bfs('S', graph1)
     start = 'V'
     end = 'S'
-    path1 = shortestPath(start, end, parent1)
+    path1 = shortestPath(start, end, parent1, [])
     print 'shortest path from %s, %s:' % (start, end)
     print path1
 
@@ -58,12 +58,12 @@ def main():
         11: [],
         12: [],
     }
-    parent1 = bfs(1, graph2)
+    parent2 = bfs(1, graph2)
     start = 11
     end = 1
-    path1 = shortestPath(start, end, parent1)
+    path2 = shortestPath(start, end, parent2, [])
     print 'shortest path from %d, %d:' % (start, end)
-    print path1
+    print path2
 
 if __name__ == '__main__':
     main()
