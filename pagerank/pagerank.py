@@ -1,3 +1,6 @@
+# http://dpk.io/pagerank
+import operator
+
 def pagerank(graph, damping=0.85, epsilon=1.0e-8):
     inlink_map = {}
     outlink_counts = {}
@@ -5,7 +8,6 @@ def pagerank(graph, damping=0.85, epsilon=1.0e-8):
     def new_node(node):
         if node not in inlink_map: inlink_map[node] = set()
         if node not in outlink_counts: outlink_counts[node] = 0
-        print node, inlink_map[node], outlink_counts[node]
     
     for tail_node, head_node in graph:
         print tail_node, head_node
@@ -16,26 +18,21 @@ def pagerank(graph, damping=0.85, epsilon=1.0e-8):
         if tail_node not in inlink_map[head_node]:
             inlink_map[head_node].add(tail_node)
             outlink_counts[tail_node] += 1
-        print  head_node, inlink_map[head_node], \
-            tail_node, outlink_counts[tail_node]
-        print ''
     
     all_nodes = set(inlink_map.keys())
-    print all_nodes
     for node, outlink_count in outlink_counts.items():
         if outlink_count == 0:
+            print node
             outlink_counts[node] = len(all_nodes)
-            print node, outlink_count, outlink_counts[node] 
             for l_node in all_nodes: 
                 inlink_map[l_node].add(node)
-                print l_node, inlink_map[l_node]
+    print outlink_counts
+
     
     initial_value = 1 / len(all_nodes)
     ranks = {}
     for node in inlink_map.keys(): 
         ranks[node] = initial_value
-    print "ranks"
-    print ranks
     
     new_ranks = {}
     delta = 1.0
@@ -63,10 +60,10 @@ def main():
         [11,9],
         [11,10]
     ]
-    rank = pagerank(graph)
-    for k, v in rank[0].items():
-        print k, v
     print graph
+    rank = pagerank(graph)
+    for k, v in reversed(sorted(rank[0].items(), key=operator.itemgetter(1))):
+        print k, v
     
 
 if __name__ == '__main__':
