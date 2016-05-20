@@ -2,11 +2,10 @@
 
 
 def merge(a, b):
-    m = len(a) + len(b)
     s = []
     i = 0
     j = 0
-    for k in xrange(m):
+    for k in xrange(len(a) + len(b)):
         try:
             a[i]
         except IndexError:  # reached end of a
